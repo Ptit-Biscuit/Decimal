@@ -6,6 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 import java.util.Timer;
+import java.util.TimerTask;
 
 /**
 * Created by Ptit-Biscuit on 15/12/2017.
@@ -77,16 +78,22 @@ public final class Window extends JFrame {
 		this.mainPanel = new JPanel(new BorderLayout());
 		this.timer = new Random().nextInt(61);
 
-		this.threadTimer = new Timer();
-		noClick = true;
-
 		JLabel countDown = new JLabel(String.valueOf(this.timer));
 		countDown.setHorizontalAlignment(SwingConstants.CENTER);
 		countDown.setFont(new Font("Helvetica", Font.PLAIN, 90));
 
-
+		TimerTask timerTask = new TimerTask() {
+			@Override
+			public void run() {
+				timer -= 0.1f;
+				countDown.setText(String.valueOf(timer));
+			}
+		};
 
 		JButton go = new JButton("GO !");
+		go.addActionListener(e -> {
+			timerTask.run();
+		});
 
 		this.mainPanel.add(countDown, BorderLayout.CENTER);
 		this.mainPanel.add(go, BorderLayout.SOUTH);
