@@ -76,7 +76,7 @@ public final class Window extends JFrame {
 	*/
 	private void initComponents() {
 		this.mainPanel = new JPanel(new BorderLayout());
-		this.timer = new Random().nextInt(61);
+		this.timer = new Random().nextInt(6);
 
 		JLabel countDown = new JLabel(String.valueOf(this.timer));
 		countDown.setHorizontalAlignment(SwingConstants.CENTER);
@@ -85,14 +85,16 @@ public final class Window extends JFrame {
 		TimerTask timerTask = new TimerTask() {
 			@Override
 			public void run() {
-				timer -= 0.1f;
-				countDown.setText(String.valueOf(timer));
+				timer -= 0.001f;
+				countDown.setText(String.format("%.3f", timer));
 			}
 		};
 
+		this.threadTimer = new Timer();
+
 		JButton go = new JButton("GO !");
 		go.addActionListener(e -> {
-			timerTask.run();
+			this.threadTimer.schedule(timerTask, 0, 1);
 		});
 
 		this.mainPanel.add(countDown, BorderLayout.CENTER);
