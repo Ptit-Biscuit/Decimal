@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
+import java.util.Timer;
 
 /**
 * Created by Ptit-Biscuit on 15/12/2017.
@@ -29,9 +30,9 @@ public final class Window extends JFrame {
 	private static final Window WINDOW = new Window("Decimal game");
 
 	/**
-	 * Le thread du timer.
+	 * Le timer du thread.
 	 */
-	private Thread threadTimer;
+	private Timer threadTimer;
 
 	/**
 	* Le panneau principal.
@@ -76,24 +77,16 @@ public final class Window extends JFrame {
 		this.mainPanel = new JPanel(new BorderLayout());
 		this.timer = new Random().nextInt(61);
 
+		this.threadTimer = new Timer();
 		noClick = true;
 
 		JLabel countDown = new JLabel(String.valueOf(this.timer));
 		countDown.setHorizontalAlignment(SwingConstants.CENTER);
 		countDown.setFont(new Font("Helvetica", Font.PLAIN, 90));
 
-		/*this.threadTimer = new Thread(() -> {
-			while (noClick) {
-				timer -= 0.1f;
-				countDown.setText(String.valueOf(timer));
 
-			}
-		});*/
 
 		JButton go = new JButton("GO !");
-		/*go.addActionListener(e -> {
-			this.threadTimer.start();
-		});*/
 
 		this.mainPanel.add(countDown, BorderLayout.CENTER);
 		this.mainPanel.add(go, BorderLayout.SOUTH);
