@@ -1,12 +1,19 @@
 package com.epsi.view;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import com.epsi.adapter.MyKeyAdapter;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 /**
 * Created by Ptit-Biscuit on 15/12/2017.
@@ -31,24 +38,24 @@ public final class Window extends JFrame {
 	private static final Window WINDOW = new Window("Decimal game");
 
 	/**
-	 * Le timer du thread.
+	 * Le panneau principal.
 	 */
-	private Timer threadTimer;
-
-	/**
-	* Le panneau principal.
-	*/
 	private JPanel mainPanel;
 
 	/**
-	 * Le timer du jeu.
+	 * Le label du timer
 	 */
-	private float timer;
+	private JLabel countDown;
 
 	/**
-	 * Fin du jeu.
+	 * Le temps du jeu.
 	 */
-	private boolean noClick;
+	private float time = 0.0f;
+
+	/**
+	 * L'état du temps (false si négatif).
+	 */
+	private boolean timerState = true;
 
 	/**
 	* Constructeur de la classe Window.
@@ -57,61 +64,43 @@ public final class Window extends JFrame {
 	*/
 	private Window(final String title) {
 		super(title);
+
+		System.out.println(System.getenv("isDev"));
+
 		this.initComponents();
 		this.initFrame();
 
-		this.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				super.keyPressed(e);
-
-				if (e.getKeyChar() == KeyEvent.VK_SPACE)
-					noClick = false;
-			}
-		});
+		this.addKeyListener(new MyKeyAdapter());
 	}
 
 	/**
 	* Initialisation des composants de la fenêtre.
-	*/
-	private void initComponents() {
+	 */
+	public void initComponents() {
 		this.mainPanel = new JPanel(new BorderLayout());
-		this.timer = new Random().nextInt(6);
+		this.mainPanel.setBackground(new Color(145, 255, 164));
 
-		JLabel countDown = new JLabel(String.valueOf(this.timer));
-		countDown.setHorizontalAlignment(SwingConstants.CENTER);
-		countDown.setFont(new Font("Helvetica", Font.PLAIN, 90));
+		this.countDown = new JLabel();
+		this.resetCountDown();
 
-		TimerTask timerTask = new TimerTask() {
-			@Override
-			public void run() {
-				timer -= 0.001f;
-				countDown.setText(String.format("%.3f", timer));
-			}
-		};
+		this.countDown.setHorizontalAlignment(SwingConstants.CENTER);
+		this.countDown.setFont(new Font("Helvetica", Font.PLAIN, 150));
+		this.countDown.setForeground(new Color(255, 255, 255));
 
-		this.threadTimer = new Timer();
-
-		JButton go = new JButton("GO !");
-		go.addActionListener(e -> {
-			this.threadTimer.schedule(timerTask, 0, 1);
-		});
-
-		this.mainPanel.add(countDown, BorderLayout.CENTER);
-		this.mainPanel.add(go, BorderLayout.SOUTH);
+		this.mainPanel.add(this.countDown, BorderLayout.CENTER);
 	}
 
 	/**
-	* Initialisation de la fenêtre.
-	*/
-	private void initFrame() {
+	 * Initialisation de la fenêtre.
+	 */
+	public void initFrame() {
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		this.setResizable(false);
 
 		Point centreEcran = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
-		this.setLocation((int) centreEcran.getX() - (this.getPreferredSize().width / 2),
-		(int) centreEcran.getY() - (this.getPreferredSize().height / 2));
+		this.setLocation((int) centreEcran.getX() - (WIDTH / 2),
+				(int) centreEcran.getY() - (HEIGHT / 2));
 
 		this.setContentPane(this.mainPanel);
 		this.pack();
@@ -132,5 +121,57 @@ public final class Window extends JFrame {
 	*/
 	public void close() {
 		this.dispose();
+	}
+
+	/**
+	 * Setter de la couleur du panneau principal.
+	 *
+	 * @param mainPanelBackground La nouvelle couleur du panneau principal
+	 */
+	public void setMainPanelBackground(Color mainPanelBackground) {
+		this.mainPanel.setBackground(mainPanelBackground);
+	}
+
+	/**
+	 * Update le countdown.
+	 */
+	public void updateCountDown() {
+		this.time -= 0.001f;
+		this.countDown.setText(String.format("%.3f", this.time));
+	}
+
+	/**
+	 * Reset le countdown.
+	 */
+	public void resetCountDown() {
+		this.time = 1.0f + new Random().nextFloat() * 4;
+		this.countDown.setText(String.format("%.3f", this.time));
+	}
+
+	/**
+	 * Getter du temps.
+	 *
+	 * @return Le temps
+	 */
+	public float getTime() {
+		return this.time;
+	}
+
+	/**
+	 * Getter de l'état du temps.
+	 *
+	 * @return True si le temps est positif, false sinon
+	 */
+	public boolean getTimerState() {
+		return this.timerState;
+	}
+
+	/**
+	 * Setter de l'état du temps.
+	 *
+	 * @param timerState Le nouvel état du temps
+	 */
+	public void setTimerState(boolean timerState) {
+		this.timerState = timerState;
 	}
 }
