@@ -1,7 +1,9 @@
-package com.epsi.View;
+package com.epsi.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 
 /**
@@ -27,14 +29,24 @@ public final class Window extends JFrame {
 	private static final Window WINDOW = new Window("Decimal game");
 
 	/**
+	 * Le thread du timer.
+	 */
+	private Thread threadTimer;
+
+	/**
 	* Le panneau principal.
 	*/
 	private JPanel mainPanel;
 
 	/**
-	 * Le label représentant le chrono.
+	 * Le timer du jeu.
 	 */
-	private JLabel countDown;
+	private float timer;
+
+	/**
+	 * Fin du jeu.
+	 */
+	private boolean noClick;
 
 	/**
 	* Constructeur de la classe Window.
@@ -45,6 +57,16 @@ public final class Window extends JFrame {
 		super(title);
 		this.initComponents();
 		this.initFrame();
+
+		this.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				super.keyPressed(e);
+
+				if (e.getKeyChar() == KeyEvent.VK_SPACE)
+					noClick = false;
+			}
+		});
 	}
 
 	/**
@@ -52,15 +74,29 @@ public final class Window extends JFrame {
 	*/
 	private void initComponents() {
 		this.mainPanel = new JPanel(new BorderLayout());
+		this.timer = new Random().nextInt(61);
 
-		Random r =new Random();
-		float timer = r.nextInt(61);
+		noClick = true;
 
-		this.countDown = new JLabel(String.valueOf(timer));
-		this.countDown.setHorizontalAlignment(SwingConstants.CENTER);
-		this.countDown.setFont(new Font("Helvetica", Font.PLAIN, 90));
+		JLabel countDown = new JLabel(String.valueOf(this.timer));
+		countDown.setHorizontalAlignment(SwingConstants.CENTER);
+		countDown.setFont(new Font("Helvetica", Font.PLAIN, 90));
 
-		this.mainPanel.add(this.countDown, BorderLayout.CENTER);
+		/*this.threadTimer = new Thread(() -> {
+			while (noClick) {
+				timer -= 0.1f;
+				countDown.setText(String.valueOf(timer));
+
+			}
+		});*/
+
+		JButton go = new JButton("GO !");
+		/*go.addActionListener(e -> {
+			this.threadTimer.start();
+		});*/
+
+		this.mainPanel.add(countDown, BorderLayout.CENTER);
+		this.mainPanel.add(go, BorderLayout.SOUTH);
 	}
 
 	/**

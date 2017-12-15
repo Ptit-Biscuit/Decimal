@@ -1,4 +1,4 @@
-package com.epsi;
+package com;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
