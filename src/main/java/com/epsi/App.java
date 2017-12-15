@@ -1,5 +1,7 @@
 package com.epsi;
 
+import com.epsi.View.Window;
+
 /**
  * Hello world!
  *
@@ -8,6 +10,6 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        Window w = Window.getWindow();
     }
 }
