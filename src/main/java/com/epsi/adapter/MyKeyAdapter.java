@@ -39,15 +39,13 @@ public class MyKeyAdapter extends KeyAdapter {
 			this.isRunning = !this.isRunning;
 		}
 
-		if (e.getKeyChar() == 'r') {
+		if (e.getKeyChar() == 'r' && !isRunning) {
 			this.timer.cancel();
 			this.timer = new Timer();
 			initTimerTask();
 
 			Window.getWindow().resetCountDown();
 			Window.getWindow().setMainPanelBackground(new Color(145, 255, 164));
-
-			isRunning = false;
 		}
 	}
 
