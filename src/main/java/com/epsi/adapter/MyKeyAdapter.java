@@ -1,5 +1,6 @@
 package com.epsi.adapter;
 
+import com.epsi.view.MainPanel;
 import com.epsi.view.Window;
 
 import java.awt.Color;
@@ -24,10 +25,13 @@ public class MyKeyAdapter extends KeyAdapter {
 	 */
 	private boolean isRunning = false;
 
+	/**
+	 * Constructeur.
+	 */
+	public MyKeyAdapter() {}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
-		super.keyPressed(e);
-
 		if (e.getKeyChar() == KeyEvent.VK_SPACE) {
 			if (this.isRunning) {
 				this.timerTask.cancel();
@@ -44,8 +48,8 @@ public class MyKeyAdapter extends KeyAdapter {
 			this.timer = new Timer();
 			initTimerTask();
 
-			Window.getWindow().resetCountDown();
-			Window.getWindow().setMainPanelBackground(new Color(145, 255, 164));
+			MainPanel.getInstance().resetCountDown();
+			MainPanel.getInstance().setBackground(new Color(145, 255, 164));
 		}
 	}
 
@@ -56,11 +60,11 @@ public class MyKeyAdapter extends KeyAdapter {
 		this.timerTask = new TimerTask() {
 			@Override
 			public void run() {
-				Window.getWindow().updateCountDown();
+				MainPanel.getInstance().updateCountDown();
 
-				if (Window.getWindow().getTime() < 0) {
-					Window.getWindow().setTimerState(false);
-					Window.getWindow().setMainPanelBackground(new Color(255, 189, 189));
+				if (MainPanel.getInstance().getTime() < 0) {
+					MainPanel.getInstance().setTimerState(false);
+					MainPanel.getInstance().setBackground(new Color(255, 189, 189));
 				}
 			}
 		};

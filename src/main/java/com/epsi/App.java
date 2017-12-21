@@ -15,15 +15,25 @@ public class App  {
 	 */
 	private static Dao dao;
 
+	/*
 	static {
-		try {
-			dao = new Dao();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	try { dao = new Dao();
+	} catch (SQLException e) { e.printStackTrace(); }
 	}
+	*/
 
-    public static void main(String[] args) {
-        Window.getWindow();
+	public static void main(String[] args) {
+        Window w = Window.getInstance();
+    }
+
+	/**
+	 * Vérification du login dans la BDD.
+	 * @param pseudo Le pseudo du joueur
+	 * @param password Le mot de passe
+	 */
+	public static void checkLogin(String pseudo, String password) {
+    	if (!pseudo.isEmpty() && !password.isEmpty()) {
+		    Window.getInstance().nextPanel();
+	    }
     }
 }
