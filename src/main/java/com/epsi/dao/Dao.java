@@ -2,6 +2,7 @@ package com.epsi.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Dao {
@@ -21,7 +22,35 @@ public class Dao {
 			e.printStackTrace();
 		}
 
-		this.con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Decimal?user=root&password=root");
+		this.con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Decimal?user=root");
+	}
+
+	/**
+	 * Valide le couple pseudo / mot de passe d'un joueur.
+	 * @param pseudo Le pseudo du joueur
+	 * @param password Le hash du mot de passe
+	 * @return True si le joueur est enregistré, false sinon
+	 */
+	public boolean validatePlayer(String pseudo, String password) {
+		boolean valid = false;
+		String x = "SELECT * FROM joueurs WHERE pseudo = '" + pseudo + "';";
+
+		if (!this.isClosed()) {
+			try {
+				ResultSet result = this.con.prepareStatement(x).executeQuery();
+
+				if (result.next()) {
+					if (pseudo.equals(result.getString("pseudo"))
+							&& password.equals(result.getString("password"))) {
+						valid = true;
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return valid;
 	}
 
 	/**
@@ -32,7 +61,7 @@ public class Dao {
 	 * @throws SQLException Si erreur avec la BDD
 	 */
 	public boolean addScoreToDatabase(String pseudo, int score) throws SQLException {
-		String x = "INSERT INTO score (pseudo, score) VALUES ('" + pseudo + "', '" + score + "');";
+		String x = "INSERT INTO scores (pseudo, score) VALUES ('" + pseudo + "', '" + score + "');";
 		return this.con.prepareStatement(x).execute();
 	}
 

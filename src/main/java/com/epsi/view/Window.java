@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 /**
@@ -45,14 +46,14 @@ public class Window extends JFrame {
 
 		this.initComponents();
 		this.initFrame();
-
-		this.addKeyListener(new MyKeyAdapter());
 	}
 
 	/**
 	* Initialisation des composants de la fenêtre.
 	 */
 	private void initComponents() {
+		this.addKeyListener(new MyKeyAdapter());
+
 		// init loginPanel
 		this.loginPanel = new LoginPanel("Decimal");
 	}
@@ -82,6 +83,17 @@ public class Window extends JFrame {
 		this.setContentPane(MainPanel.getInstance());
 		this.revalidate();
 		this.requestFocus();
+	}
+
+	/**
+	 * Popup si le pseudo / mot de passe est incorrect.
+	 */
+	public void popupInvalidLogin() {
+		JOptionPane.showMessageDialog(
+				this,
+				"Le pseudo / mot de passe est incorrect",
+				"Login incorrect",
+				JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	/**

@@ -1,13 +1,9 @@
 package com.epsi.view;
 
-import com.epsi.App;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -76,26 +72,7 @@ public class LoginPanel extends JPanel {
 		this.add(pseudoPanel);
 
 		// init start button
-		this.go = new JButton("Go !");
-		this.go.addActionListener(e -> App.checkLogin(this.pseudo.getText(), String.valueOf(this.password.getPassword())));
-		this.go.addKeyListener(new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-					go.doClick();
-				}
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-
-			}
-		});
+		this.go = new GoButton("Go !", this.pseudo, this.password);
 		this.add(this.go);
 	}
 }
