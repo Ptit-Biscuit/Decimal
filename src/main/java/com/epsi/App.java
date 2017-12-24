@@ -33,26 +33,11 @@ public class App  {
 	/**
 	 * Vérification du login dans la BDD.
 	 * @param pseudo Le pseudo du joueur
-	 * @param password Le mot de passe
+	 * @param password Le mot de passe chiffré
 	 */
 	public static void checkLogin(String pseudo, String password) {
-		StringBuilder hash = new StringBuilder();
-
-		try {
-			String salt = password + "LeagueOfLegend";
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			md.update(salt.getBytes("UTF-8"));
-			byte[] bytes = md.digest();
-
-			for (byte b : bytes) {
-				hash.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
-			}
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-
 		if (!dao.isClosed()) {
-			if (dao.validatePlayer(pseudo, hash.toString())) {
+			if (dao.validatePlayer(pseudo, password)) {
 				Window.getInstance().nextPanel();
 			} else {
 				Window.getInstance().popupInvalidLogin();
@@ -60,5 +45,46 @@ public class App  {
 		} else {
 			System.out.println("Connexion perdue avec la BDD");
 		}
+    }
+
+	/**
+	 * Ajoute un joueur dans la BDD.
+	 * @param pseudo Le pseudo du joueur
+	 * @param password Le mot de passe chiffré
+	 */
+	public static void addPlayer(String pseudo, String password) {
+		if (!dao.isClosed()) {
+			if (dao.newPlayer(pseudo, password)) {
+				Window.getInstance().nextPanel();
+			} else {
+				Window.getInstance().popupInvalidPlayer();
+			}
+		} else {
+			System.out.println("Connexion perdue avec la BDD");
+		}
+    }
+
+	/**
+	 * Chiffrage du mot de passe pour la BDD.
+	 * @param password Le mot de passe
+	 * @return Le mot de passe chiffré
+	 */
+	public static String hashPassword(String password) {
+	    StringBuilder hash = new StringBuilder();
+
+	    try {
+		    String salt = password + "LeagueOfLegend";
+		    MessageDigest md = MessageDigest.getInstance("MD5");
+		    md.update(salt.getBytes("UTF-8"));
+		    byte[] bytes = md.digest();
+
+		    for (byte b : bytes) {
+			    hash.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
+		    }
+	    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e1) {
+		    e1.printStackTrace();
+	    }
+
+	    return hash.toString();
     }
 }

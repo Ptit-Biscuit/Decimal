@@ -9,14 +9,15 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class GoButton extends JButton {
+public class SubscribeButton extends JButton {
 	/**
 	 * Constructeur.
-	 * @param text Le libelle du bouton
+	 * @param text Le libellé du bouton
 	 * @param pseudoField Le champs du pseudo
 	 * @param passwordField Le champs du mot de passe
+	 * @param confirmField Le champs de confirmation du mot de passe
 	 */
-	public GoButton(String text, JTextField pseudoField, JPasswordField passwordField) {
+	public SubscribeButton(String text, JTextField pseudoField, JPasswordField passwordField, JPasswordField confirmField) {
 		super(text);
 
 		this.setFont(new Font("Helvetica", Font.ITALIC, 20));
@@ -24,8 +25,10 @@ public class GoButton extends JButton {
 		this.addActionListener(e -> {
 			boolean okPseudo = true;
 			boolean okPassword = true;
+			boolean okConfirm = true;
 			String pseudo = pseudoField.getText();
 			String password = String.valueOf(passwordField.getPassword());
+			String confirm = String.valueOf(confirmField.getPassword());
 
 			if (pseudo.isEmpty() || pseudo.trim().isEmpty()) {
 				pseudoField.setBackground(new Color(255, 189, 189));
@@ -49,8 +52,21 @@ public class GoButton extends JButton {
 				passwordField.setToolTipText("");
 			}
 
-			if (okPseudo && okPassword) {
-				App.checkLogin(pseudo, App.hashPassword(password));
+			if (confirm.isEmpty() || confirm.trim().isEmpty()) {
+				confirmField.setBackground(new Color(255, 189, 189));
+				confirmField.setToolTipText("Confirmation vide");
+				okConfirm = false;
+			} else if (!confirm.equals(password)) {
+				confirmField.setBackground(new Color(255, 189, 189));
+				confirmField.setToolTipText("Mot de passe différent");
+				okConfirm = false;
+			} else {
+				confirmField.setBackground(Color.WHITE);
+				confirmField.setToolTipText("");
+			}
+
+			if (okPseudo && okPassword && okConfirm) {
+				App.addPlayer(pseudo, App.hashPassword(password));
 			}
 		});
 	}

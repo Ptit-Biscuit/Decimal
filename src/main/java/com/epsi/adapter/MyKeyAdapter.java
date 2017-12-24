@@ -1,7 +1,6 @@
 package com.epsi.adapter;
 
 import com.epsi.view.MainPanel;
-import com.epsi.view.Window;
 
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
@@ -32,6 +31,7 @@ public class MyKeyAdapter extends KeyAdapter {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		// Start / Stop timer
 		if (e.getKeyChar() == KeyEvent.VK_SPACE) {
 			if (this.isRunning) {
 				this.timerTask.cancel();
@@ -43,6 +43,7 @@ public class MyKeyAdapter extends KeyAdapter {
 			this.isRunning = !this.isRunning;
 		}
 
+		// reset timer
 		if (e.getKeyChar() == 'r' && !isRunning) {
 			this.timer.cancel();
 			this.timer = new Timer();

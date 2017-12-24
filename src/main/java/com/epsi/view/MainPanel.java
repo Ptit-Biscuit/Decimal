@@ -34,6 +34,7 @@ public class MainPanel extends JPanel {
 		this.setBackground(new Color(145, 255, 164));
 
 		this.initComponents();
+		this.add(this.countDown, BorderLayout.CENTER);
 	}
 
 	private void initComponents() {
@@ -43,8 +44,6 @@ public class MainPanel extends JPanel {
 		this.countDown.setHorizontalAlignment(SwingConstants.CENTER);
 		this.countDown.setFont(new Font("Helvetica", Font.PLAIN, 150));
 		this.countDown.setForeground(new Color(255, 255, 255));
-
-		this.add(this.countDown, BorderLayout.CENTER);
 	}
 
 	/**
