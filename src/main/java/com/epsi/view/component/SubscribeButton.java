@@ -1,4 +1,4 @@
-package com.epsi.view;
+package com.epsi.view.component;
 
 import com.epsi.App;
 import com.epsi.adapter.EnterAdapter;
@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 public class SubscribeButton extends JButton {
 	/**
 	 * Constructeur.
+	 *
 	 * @param text Le libellé du bouton
 	 * @param pseudoField Le champs du pseudo
 	 * @param passwordField Le champs du mot de passe

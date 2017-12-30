@@ -1,9 +1,12 @@
-package com.epsi.view;
+package com.epsi.view.component;
+
+import com.epsi.view.Window;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -11,6 +14,21 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class SubscribePanel extends JPanel {
+	/**
+	 * Le pseudo du joueur.
+	 */
+	private static JTextField pseudo;
+
+	/**
+	 * Le mot de passe du joueur.
+	 */
+	private static JPasswordField password;
+
+	/**
+	 * La confirmation du mot de passe.
+	 */
+	private static JPasswordField confirm;
+
 	/**
 	 * Constructeur.
 	 */
@@ -20,7 +38,17 @@ public class SubscribePanel extends JPanel {
 		this.add(title, TOP_ALIGNMENT);
 
 		this.initComponents();
+		clearFields();
 		this.setBackground(new Color(150, 150, 255));
+	}
+
+	/**
+	 * Initialisation des champs de texte.
+	 */
+	public static void clearFields() {
+		pseudo.setText("");
+		password.setText("");
+		confirm.setText("");
 	}
 
 	private void initComponents() {
@@ -35,7 +63,7 @@ public class SubscribePanel extends JPanel {
 		pseudoLabel.setHorizontalAlignment(JLabel.CENTER);
 		subscribePanel.add(pseudoLabel);
 
-		JTextField pseudo = new JTextField(15);
+		pseudo = new JTextField(15);
 		pseudo.setPreferredSize(new Dimension(Window.WIDTH, 25));
 		subscribePanel.add(pseudo);
 
@@ -45,7 +73,7 @@ public class SubscribePanel extends JPanel {
 		passwordLabel.setHorizontalAlignment(JLabel.CENTER);
 		subscribePanel.add(passwordLabel);
 
-		JPasswordField password = new JPasswordField(15);
+		password = new JPasswordField(15);
 		password.setPreferredSize(new Dimension(Window.WIDTH, 25));
 		subscribePanel.add(password);
 
@@ -55,7 +83,7 @@ public class SubscribePanel extends JPanel {
 		confirmPasswordLabel.setHorizontalAlignment(JLabel.CENTER);
 		subscribePanel.add(confirmPasswordLabel);
 
-		JPasswordField confirm = new JPasswordField(15);
+		confirm = new JPasswordField(15);
 		confirm.setPreferredSize(new Dimension(Window.WIDTH, 25));
 		subscribePanel.add(confirm);
 
@@ -63,7 +91,13 @@ public class SubscribePanel extends JPanel {
 
 		// init start button
 		SubscribeButton sub = new SubscribeButton("Go !", pseudo, password, confirm);
-		sub.setPreferredSize(new Dimension(Window.WIDTH - 250, 50));
+		sub.setPreferredSize(new Dimension(Window.WIDTH - 250, 40));
 		this.add(sub);
+
+		// init back button
+		JButton back = new JButton("Retour");
+		back.setPreferredSize(new Dimension(Window.WIDTH - 250, 30));
+		back.addActionListener(e -> Window.getInstance().showCard("Start"));
+		this.add(back);
 	}
 }

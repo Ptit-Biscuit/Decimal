@@ -1,9 +1,12 @@
-package com.epsi.view;
+package com.epsi.view.component;
+
+import com.epsi.view.Window;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -12,6 +15,16 @@ import javax.swing.SwingConstants;
 
 public class LoginPanel extends JPanel {
 	/**
+	 * Le pseudo du joueur.
+	 */
+	private static JTextField pseudo;
+
+	/**
+	 * Le mot de passe du joueur.
+	 */
+	private static JPasswordField password;
+
+	/**
 	 * Constructeur
 	 */
 	public LoginPanel() {
@@ -19,17 +32,17 @@ public class LoginPanel extends JPanel {
 		title.setFont(new Font("Helvetica", Font.PLAIN, 90));
 		this.add(title, TOP_ALIGNMENT);
 
-		/*ImageIcon icon = null;
-		try {
-			icon = new ImageIcon(new File("res/giphy.gif").toURI().toURL());
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		JLabel iconLabel = new JLabel("", icon, SwingConstants.LEADING);
-		this.add(iconLabel);*/
-
 		this.initComponents();
+		clearFields();
 		this.setBackground(new Color(150, 150, 255));
+	}
+
+	/**
+	 * Initialisation des champs de texte.
+	 */
+	public static void clearFields() {
+		pseudo.setText("");
+		password.setText("");
 	}
 
 	/**
@@ -47,7 +60,7 @@ public class LoginPanel extends JPanel {
 		pseudoLabel.setHorizontalAlignment(JLabel.CENTER);
 		connectionPanel.add(pseudoLabel);
 
-		JTextField pseudo = new JTextField(15);
+		pseudo = new JTextField(15);
 		pseudo.setPreferredSize(new Dimension(Window.WIDTH, 25));
 		connectionPanel.add(pseudo);
 
@@ -57,7 +70,7 @@ public class LoginPanel extends JPanel {
 		passwordLabel.setHorizontalAlignment(JLabel.CENTER);
 		connectionPanel.add(passwordLabel);
 
-		JPasswordField password = new JPasswordField(15);
+		password = new JPasswordField(15);
 		password.setPreferredSize(new Dimension(Window.WIDTH, 25));
 		connectionPanel.add(password);
 
@@ -65,7 +78,13 @@ public class LoginPanel extends JPanel {
 
 		// init start button
 		GoButton go = new GoButton("Go !", pseudo, password);
-		go.setPreferredSize(new Dimension(Window.WIDTH - 250, 50));
+		go.setPreferredSize(new Dimension(Window.WIDTH - 250, 40));
 		this.add(go);
+
+		// init back button
+		JButton back = new JButton("Retour");
+		back.setPreferredSize(new Dimension(Window.WIDTH - 250, 30));
+		back.addActionListener(e -> Window.getInstance().showCard("Start"));
+		this.add(back);
 	}
 }

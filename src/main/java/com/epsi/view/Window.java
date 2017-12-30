@@ -1,7 +1,12 @@
 package com.epsi.view;
 
+import com.epsi.App;
 import com.epsi.adapter.EnterAdapter;
 import com.epsi.adapter.MyKeyAdapter;
+import com.epsi.view.component.EndPanel;
+import com.epsi.view.component.LoginPanel;
+import com.epsi.view.component.MainPanel;
+import com.epsi.view.component.SubscribePanel;
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -20,7 +25,7 @@ import javax.swing.WindowConstants;
 /**
 * Created by Ptit-Biscuit on 15/12/2017.
 *
-* @version 1.3
+* @version 1.4
 * @since 1.0
 */
 public class Window extends JFrame {
@@ -37,7 +42,7 @@ public class Window extends JFrame {
 	/**
 	* L'unique instance possible de la classe Window (singleton).
 	*/
-	private static final Window WINDOW = new Window("Decimal");
+	private static Window window = new Window("Decimal");
 
 	/**
 	 * Le contenu affiché.
@@ -45,12 +50,8 @@ public class Window extends JFrame {
 	private JPanel content;
 
 	/**
-	 * Le panneau de départ.
-	 */
-	private JPanel startPanel;
-
-	/**
 	* Constructeur.
+	 *
 	* @param title Le titre de la fenêtre
 	*/
 	private Window(String title) {
@@ -64,24 +65,31 @@ public class Window extends JFrame {
 	 * Initialisation des composants.
 	 */
 	private void initComponents() {
-		this.startPanel = new JPanel();
-		this.startPanel.setBackground(new Color(150, 150, 255));
+		JPanel startPanel = new JPanel();
+		startPanel.setBackground(new Color(150, 150, 255));
 
 		JLabel title = new JLabel("Decimal", SwingConstants.CENTER);
 		title.setFont(new Font("Helvetica", Font.PLAIN, 90));
-		this.startPanel.add(title, TOP_ALIGNMENT);
+		startPanel.add(title, TOP_ALIGNMENT);
 
 		JButton connection = new JButton("Connexion");
-		connection.setPreferredSize(new Dimension(WIDTH - 250, 50));
+		connection.setPreferredSize(new Dimension(WIDTH - 250, 30));
 		connection.addKeyListener(new EnterAdapter());
 		connection.addActionListener(e -> this.showCard("Connection"));
-		this.startPanel.add(connection);
+		startPanel.add(connection);
 
 		JButton subscribe = new JButton("Inscription");
-		subscribe.setPreferredSize(new Dimension(WIDTH - 250, 50));
+		subscribe.setPreferredSize(new Dimension(WIDTH - 250, 30));
 		subscribe.addKeyListener(new EnterAdapter());
 		subscribe.addActionListener(e -> this.showCard("Subscribe"));
-		this.startPanel.add(subscribe);
+		startPanel.add(subscribe);
+
+		this.content = new JPanel(new CardLayout());
+		this.content.add(startPanel, "Start");
+		this.content.add(new SubscribePanel(), "Subscribe");
+		this.content.add(new LoginPanel(), "Connection");
+		this.content.add(MainPanel.getInstance(), "Main");
+		this.setContentPane(this.content);
 	}
 
 	/**
@@ -96,13 +104,9 @@ public class Window extends JFrame {
 		this.setLocation((int) centreEcran.getX() - (WIDTH / 2),
 				(int) centreEcran.getY() - (HEIGHT / 2));
 
-		this.content = new JPanel(new CardLayout());
-		this.content.add(this.startPanel, "Start");
-		this.content.add(new SubscribePanel(), "Subscribe");
-		this.content.add(new LoginPanel(), "Connection");
-		this.setContentPane(this.content);
-
-		this.addKeyListener(new MyKeyAdapter());
+		MyKeyAdapter adapter = new MyKeyAdapter();
+		this.addKeyListener(adapter);
+		this.addMouseListener(adapter);
 
 		this.pack();
 		this.setVisible(true);
@@ -110,28 +114,58 @@ public class Window extends JFrame {
 
 	/**
 	 * Change le panneau affiché.
+	 *
 	 * @param cardName Le nom du panneau
 	 */
-	private void showCard(String cardName) {
+	public void showCard(String cardName) {
 		((CardLayout) this.content.getLayout()).show(this.content, cardName);
 	}
 
 	/**
 	 * Passage au panneau principal.
 	 */
-	public void nextPanel() {
-		this.setContentPane(MainPanel.getInstance());
+	public void showMainPanel() {
+		MyKeyAdapter.reset();
+		this.showCard("Main");
 		this.revalidate();
 		this.requestFocus();
 	}
 
 	/**
-	 * Popup si le joueur existe déjà dans la BDD.
+	 * Fin de partie.
 	 */
-	public void popupInvalidPlayer() {
+	public void endGame() {
+		int score = Math.round((10f + MainPanel.getInstance().getTime()) * 1000);
+
+		if (MainPanel.getInstance().getTimerState()) {
+			score = Math.round((10f - MainPanel.getInstance().getTime()) * 1000);
+		}
+
+		this.content.add(new EndPanel(score), "End");
+		this.showCard("End");
+		App.endGame(score);
+	}
+
+	/**
+	 * Popup si la BDD est inaccessible.
+	 */
+	public void popupUnreachableDatabase() {
 		JOptionPane.showMessageDialog(
 				this,
-				"Le pseudo existe déjà",
+				"Connexion perdue avec la BDD",
+				"BDD inaccessible",
+				JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	/**
+	 * Popup si le joueur existe déjà dans la BDD.
+	 *
+	 * @param pseudo Le pseudo déjà existant
+	 */
+	public void popupInvalidPlayer(String pseudo) {
+		JOptionPane.showMessageDialog(
+				this,
+				"Le pseudo '" + pseudo + "' existe déjà",
 				"Pseudo incorrect",
 				JOptionPane.INFORMATION_MESSAGE);
 	}
@@ -149,9 +183,10 @@ public class Window extends JFrame {
 
 	/**
 	* Méthode complémentaire au singleton: Getter de la seule instance de Window.
+	 *
 	* @return La seule instance de Window
 	*/
 	public static Window getInstance() {
-		return WINDOW;
+		return window;
 	}
 }

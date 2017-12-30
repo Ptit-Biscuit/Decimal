@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+
 public class Dao {
 	/**
 	 * La connexion avec la BDD.
@@ -13,13 +15,14 @@ public class Dao {
 
 	/**
 	 * Constructeur de la classe Dao.
+	 *
 	 * @throws SQLException Si erreur avec la BDD
 	 */
 	public Dao() throws SQLException {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		} catch (InstantiationException | ClassNotFoundException | IllegalAccessException e) {
-			e.printStackTrace();
+			LogManager.getLogger(Dao.class).fatal("Driver jdbc introuvable", e);
 		}
 
 		this.con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Decimal?user=root");
@@ -27,6 +30,7 @@ public class Dao {
 
 	/**
 	 * Ajoute un joueur dans la BDD.
+	 *
 	 * @param pseudo Le pseudo du joueur
 	 * @param password Le mot de passe chiffré
 	 * @return True si le joueur est enregistré, false sinon
@@ -39,7 +43,7 @@ public class Dao {
 			try {
 				add = this.con.prepareStatement(x).executeUpdate() == 1;
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LogManager.getLogger(Dao.class).error("Joueur déjà existant", e);
 			}
 		}
 
@@ -48,6 +52,7 @@ public class Dao {
 
 	/**
 	 * Valide le couple pseudo / mot de passe d'un joueur.
+	 *
 	 * @param pseudo Le pseudo du joueur
 	 * @param password Le mot de passe chiffré
 	 * @return True si le joueur est enregistré, false sinon
@@ -63,11 +68,13 @@ public class Dao {
 				if (result.next()) {
 					if (pseudo.equals(result.getString("pseudo"))
 							&& password.equals(result.getString("password"))) {
+
 						valid = true;
+						System.setProperty("isDev", result.getBoolean("isDev") ? "true" : "false");
 					}
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LogManager.getLogger(Dao.class).error("Erreur avec la requête de validation d'un joueur", e);
 			}
 		}
 
@@ -76,6 +83,7 @@ public class Dao {
 
 	/**
 	 * Ajoute le pseudo et le score dans la BDD.
+	 *
 	 * @param pseudo Le pseudo du joueur
 	 * @param score Le score du joueur
 	 * @return True si la requête a été exécutée, false sinon
@@ -88,7 +96,7 @@ public class Dao {
 			try {
 				ok = this.con.prepareStatement(x).execute();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LogManager.getLogger(Dao.class).error("Erreur avec la requête d'ajout de score", e);
 			}
 		}
 
@@ -97,12 +105,14 @@ public class Dao {
 
 	/**
 	 * Fermeture de la connexion avec la BDD.
+	 *
 	 * @return True si la connexion est fermée, false sinon
 	 */
 	public boolean isClosed() {
 		try {
 			return con == null || con.isClosed();
 		} catch (SQLException e) {
+			LogManager.getLogger(Dao.class).warn("Connexion fermée avec la BDD", e);
 			return true;
 		}
 	}

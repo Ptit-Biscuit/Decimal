@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" strict="true" dest="err">
+
+	<Properties>
+		<Property name="base_style" value="TRACE=cyan, DEBUG=bright green, INFO=blue, WARN=yellow bold, ERROR=red, FATAL=bright magenta"/>
+	</Properties>
+
+	<Appenders>
+
+		<!-- Console appender that accepts at least warn messages -->
+		<Console name="stderr" target="SYSTEM_OUT">
+			<PatternLayout pattern="%highlight{[%-5p] %m%n%ex}{${base_style}}%style{%l{-2}}{white}%n%n"/>
+			<ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+		</Console>
+
+		<!-- Console appender that accepts at most warn message (exclusive) -->
+		<Console name="stdout" target="SYSTEM_OUT">
+			<PatternLayout pattern="%highlight{[%-5p] %m}{${base_style}}%n%n"/>
+			<ThresholdFilter level="WARN" onMatch="DENY" onMismatch="ACCEPT"/>
+		</Console>
+
+		<!-- File appender that accepts at least warn message -->
+		<File
+			name="err_file"
+			filename="DecimalLog.log"
+		    append="false"
+		    bufferedIO="true"
+		    bufferSize="4096"
+		    createOnDemand="true">
+			<PatternLayout pattern="[%-5p] %m%n%ex\tDate      : %d%n\tLocation  : %l%n%n"/>
+			<ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+		</File>
+
+	</Appenders>
+
+	<Loggers>
+		<!-- Root logger sending messages to all created appenders -->
+		<Root level="trace">
+			<AppenderRef ref="stdout"/>
+			<AppenderRef ref="stderr"/>
+			<AppenderRef ref="err_file"/>
+		</Root>
+	</Loggers>
+
+</Configuration>

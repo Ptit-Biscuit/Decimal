@@ -1,4 +1,4 @@
-package com.epsi.view;
+package com.epsi.view.component;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,7 +12,7 @@ public class MainPanel extends JPanel {
 	/**
 	 * L'unique instance possible de la classe MainPanel (singleton).
 	 */
-	private static final MainPanel MAIN_PANEL = new MainPanel();
+	private static MainPanel mainPanel = new MainPanel();
 
 	/**
 	 * Le label du timer
@@ -29,14 +29,19 @@ public class MainPanel extends JPanel {
 	 */
 	private boolean timerState = true;
 
+	/**
+	 * Constructeur.
+	 */
 	private MainPanel() {
 		this.setLayout(new BorderLayout());
 		this.setBackground(new Color(145, 255, 164));
 
 		this.initComponents();
-		this.add(this.countDown, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Initialisation des composants.
+	 */
 	private void initComponents() {
 		this.countDown = new JLabel();
 		this.resetCountDown();
@@ -44,15 +49,8 @@ public class MainPanel extends JPanel {
 		this.countDown.setHorizontalAlignment(SwingConstants.CENTER);
 		this.countDown.setFont(new Font("Helvetica", Font.PLAIN, 150));
 		this.countDown.setForeground(new Color(255, 255, 255));
-	}
 
-	/**
-	 * Méthode complémentaire au singleton: Getter de la seule instance de MainPanel.
-	 *
-	 * @return La seule instance de MainPanel
-	 */
-	public static MainPanel getInstance() {
-		return MAIN_PANEL;
+		this.add(this.countDown, BorderLayout.CENTER);
 	}
 
 	/**
@@ -77,7 +75,7 @@ public class MainPanel extends JPanel {
 	 * @return Le temps
 	 */
 	public float getTime() {
-		return this.time;
+		return Float.valueOf(this.countDown.getText().replace(',', '.'));
 	}
 
 	/**
@@ -96,5 +94,14 @@ public class MainPanel extends JPanel {
 	 */
 	public void setTimerState(boolean timerState) {
 		this.timerState = timerState;
+	}
+
+	/**
+	 * Méthode complémentaire au singleton: Getter de la seule instance de MainPanel.
+	 *
+	 * @return La seule instance de MainPanel
+	 */
+	public static MainPanel getInstance() {
+		return mainPanel;
 	}
 }
