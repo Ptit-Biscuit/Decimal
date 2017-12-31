@@ -97,6 +97,11 @@ public class MyKeyAdapter extends KeyAdapter implements MouseListener {
 					MainPanel.getInstance().setTimerState(false);
 					MainPanel.getInstance().setBackground(new Color(255, 189, 189));
 				}
+
+				if (MainPanel.getInstance().getTime() <= -10) {
+					timer.cancel();
+					Window.getInstance().endGame();
+				}
 			}
 		};
 	}
