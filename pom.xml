@@ -25,6 +25,7 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
         <executions>
           <execution>
@@ -35,9 +36,16 @@
           </execution>
         </executions>
         <configuration>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
+          <archive>
+            <manifest>
+              <!-- Jar file entry point -->
+              <mainClass>com.epsi.App</mainClass>
+              <addClasspath>true</addClasspath>
+            </manifest>
+            <descriptorRefs>
+              <descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
+          </archive>
         </configuration>
       </plugin>
     </plugins>
