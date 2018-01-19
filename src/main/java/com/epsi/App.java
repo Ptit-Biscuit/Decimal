@@ -109,7 +109,7 @@ public class App  {
 	/**
 	 * Retour au menu.
 	 */
-	public static void disconnection() {
+	public static void disconnect() {
 		SubscribePanel.clearFields();
 		LoginPanel.clearFields();
 

@@ -50,7 +50,7 @@ public class EndPanel extends JPanel {
 		// init disconnect button
 		JButton disconnect = new JButton("Déconnexion");
 		disconnect.setPreferredSize(new Dimension(Window.WIDTH - 250, 30));
-		disconnect.addActionListener(e -> App.disconnection());
+		disconnect.addActionListener(e -> App.disconnect());
 		endPanel.add(disconnect);
 
 		// init quit button
