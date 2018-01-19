@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.mysql.jdbc.MySQLConnection;
 import org.apache.logging.log4j.LogManager;
 
 public class Dao {
