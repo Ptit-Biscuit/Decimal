@@ -90,6 +90,11 @@ public class Dao {
 	 */
 	public boolean addScore(String pseudo, int score) {
 		boolean ok = false;
+
+		if (score < 0) {
+			return false;
+		}
+
 		String x = "INSERT INTO scores (pseudo, score) VALUES ('" + pseudo + "', '" + score + "');";
 
 		if (!this.isClosed()) {
