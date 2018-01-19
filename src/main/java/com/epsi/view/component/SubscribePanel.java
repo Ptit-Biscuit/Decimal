@@ -35,11 +35,12 @@ public class SubscribePanel extends JPanel {
 	public SubscribePanel() {
 		JLabel title = new JLabel("Decimal", SwingConstants.CENTER);
 		title.setFont(new Font("Helvetica", Font.PLAIN, 90));
+		title.setForeground(new Color(255, 255, 255));
 		this.add(title, TOP_ALIGNMENT);
 
 		this.initComponents();
 		clearFields();
-		this.setBackground(new Color(150, 150, 255));
+		this.setBackground(new Color(140, 165, 255));
 	}
 
 	/**
@@ -55,10 +56,11 @@ public class SubscribePanel extends JPanel {
 		// init subscribe panel
 		JPanel subscribePanel = new JPanel(new GridLayout(3, 1, 10, 10));
 		subscribePanel.setPreferredSize(new Dimension(320, 102));
-		subscribePanel.setBackground(new Color(150, 150, 255));
+		subscribePanel.setBackground(new Color(140, 165, 255));
 
 		// Init pseudo field
 		JLabel pseudoLabel = new JLabel("Pseudo :");
+		pseudoLabel.setForeground(new Color(255, 255, 255));
 		pseudoLabel.setFont(new Font("Helvetica", Font.BOLD, 20));
 		pseudoLabel.setHorizontalAlignment(JLabel.CENTER);
 		subscribePanel.add(pseudoLabel);
@@ -69,6 +71,7 @@ public class SubscribePanel extends JPanel {
 
 		// init password field
 		JLabel passwordLabel = new JLabel("Mot de passe :");
+		passwordLabel.setForeground(new Color(255, 255, 255));
 		passwordLabel.setFont(new Font("Helvetica", Font.BOLD, 20));
 		passwordLabel.setHorizontalAlignment(JLabel.CENTER);
 		subscribePanel.add(passwordLabel);
@@ -79,6 +82,7 @@ public class SubscribePanel extends JPanel {
 
 		// init confirm password field
 		JLabel confirmPasswordLabel = new JLabel("Confirmation :");
+		confirmPasswordLabel.setForeground(new Color(255, 255, 255));
 		confirmPasswordLabel.setFont(new Font("Helvetica", Font.BOLD, 20));
 		confirmPasswordLabel.setHorizontalAlignment(JLabel.CENTER);
 		subscribePanel.add(confirmPasswordLabel);
@@ -91,12 +95,21 @@ public class SubscribePanel extends JPanel {
 
 		// init start button
 		SubscribeButton sub = new SubscribeButton("Go !", pseudo, password, confirm);
+		sub.setBorderPainted(false);
+		sub.setFocusPainted(false);
+		sub.setBackground(new Color(255, 255, 255));
+		sub.setForeground(new Color(140, 165, 255));
 		sub.setPreferredSize(new Dimension(Window.WIDTH - 250, 40));
 		this.add(sub);
 
 		// init back button
 		JButton back = new JButton("Retour");
-		back.setPreferredSize(new Dimension(Window.WIDTH - 250, 30));
+		back.setFont(new Font("Helvetica", Font.PLAIN, 18));
+		back.setBorderPainted(false);
+		back.setFocusPainted(false);
+		back.setBackground(new Color(255, 255, 255));
+		back.setForeground(new Color(140, 165, 255));
+		back.setPreferredSize(new Dimension(Window.WIDTH - 250, 40));
 		back.addActionListener(e -> Window.getInstance().showCard("Start"));
 		this.add(back);
 	}

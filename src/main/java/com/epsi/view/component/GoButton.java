@@ -20,7 +20,7 @@ public class GoButton extends JButton {
 	public GoButton(String text, JTextField pseudoField, JPasswordField passwordField) {
 		super(text);
 
-		this.setFont(new Font("Helvetica", Font.ITALIC, 20));
+		this.setFont(new Font("Helvetica", Font.PLAIN, 18));
 		this.addKeyListener(new EnterAdapter());
 		this.addActionListener(e -> {
 			boolean okPseudo = true;
