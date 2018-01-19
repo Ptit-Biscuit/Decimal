@@ -1,12 +1,11 @@
 package com.epsi.dao;
 
+import org.apache.logging.log4j.LogManager;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import com.mysql.jdbc.MySQLConnection;
-import org.apache.logging.log4j.LogManager;
 
 public class Dao {
 	/**
