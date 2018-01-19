@@ -82,6 +82,28 @@ public class Dao {
 	}
 
 	/**
+	 * Supprime le couple pseudo / mot de passe de la BDD
+	 *
+	 * @param pseudo Le pseudo du joueur
+	 * @param password Le mot de passe du joueur
+	 * @return True si le joueur est effacé, false sinon
+	 */
+	public boolean deletePlayer(String pseudo, String password) {
+		boolean valid = false;
+		String x = "DELETE * FROM joueurs WHERE pseudo = '" + pseudo + "' AND password = '" + password + "';";
+
+		if (!this.isClosed()) {
+			try {
+				valid = this.con.prepareStatement(x).executeQuery().next();
+			} catch (SQLException e) {
+				LogManager.getLogger(Dao.class).error("Erreur avec la requête de validation d'un joueur", e);
+			}
+		}
+
+		return valid;
+	}
+
+	/**
 	 * Ajoute le pseudo et le score dans la BDD.
 	 *
 	 * @param pseudo Le pseudo du joueur
