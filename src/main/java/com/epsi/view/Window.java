@@ -37,7 +37,7 @@ public class Window extends JFrame {
 	/**
 	 * La hauteur de la fenêtre.
 	 */
-	public static final int HEIGHT = 350;
+	public static final int HEIGHT = 360;
 
 	/**
 	* L'unique instance possible de la classe Window (singleton).
@@ -66,20 +66,32 @@ public class Window extends JFrame {
 	 */
 	private void initComponents() {
 		JPanel startPanel = new JPanel();
-		startPanel.setBackground(new Color(150, 150, 255));
+		startPanel.setBackground(new Color(140, 165, 255));
 
 		JLabel title = new JLabel("Decimal", SwingConstants.CENTER);
+		title.setForeground(new Color(255, 255, 255));
+
 		title.setFont(new Font("Helvetica", Font.PLAIN, 90));
 		startPanel.add(title, TOP_ALIGNMENT);
 
 		JButton connection = new JButton("Connexion");
-		connection.setPreferredSize(new Dimension(WIDTH - 250, 30));
+		connection.setFont(new Font("Helvetica", Font.PLAIN, 18));
+		connection.setBorderPainted(false);
+		connection.setFocusPainted(false);
+		connection.setBackground(new Color(255, 255, 255));
+		connection.setForeground(new Color(140, 165, 255));
+		connection.setPreferredSize(new Dimension(WIDTH - 250, 40));
 		connection.addKeyListener(new EnterAdapter());
 		connection.addActionListener(e -> this.showCard("Connection"));
 		startPanel.add(connection);
 
 		JButton subscribe = new JButton("Inscription");
-		subscribe.setPreferredSize(new Dimension(WIDTH - 250, 30));
+		subscribe.setFont(new Font("Helvetica", Font.PLAIN, 18));
+		subscribe.setBorderPainted(false);
+		subscribe.setFocusPainted(false);
+		subscribe.setBackground(new Color(255, 255, 255));
+		subscribe.setForeground(new Color(140, 165, 255));
+		subscribe.setPreferredSize(new Dimension(WIDTH - 250, 40));
 		subscribe.addKeyListener(new EnterAdapter());
 		subscribe.addActionListener(e -> this.showCard("Subscribe"));
 		startPanel.add(subscribe);

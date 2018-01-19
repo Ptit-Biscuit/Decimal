@@ -21,7 +21,7 @@ public class SubscribeButton extends JButton {
 	public SubscribeButton(String text, JTextField pseudoField, JPasswordField passwordField, JPasswordField confirmField) {
 		super(text);
 
-		this.setFont(new Font("Helvetica", Font.ITALIC, 20));
+		this.setFont(new Font("Helvetica", Font.PLAIN, 18));
 		this.addKeyListener(new EnterAdapter());
 		this.addActionListener(e -> {
 			boolean okPseudo = true;
