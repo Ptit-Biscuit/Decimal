@@ -3,8 +3,9 @@ package com.epsi.view;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
+import java.io.File;
+import java.net.MalformedURLException;
+import javax.swing.*;
 
 public class AdminWindow extends JFrame {
 	/**
@@ -26,15 +27,15 @@ public class AdminWindow extends JFrame {
 	 * Initialisation des composants.
 	 */
 	private void initComponents() {
-		/*ImageIcon icon = null;
+		ImageIcon icon = null;
 		try {
 			icon = new ImageIcon(new File("res/giphy.gif").toURI().toURL());
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-		JLabel iconLabel = new JLabel("", icon, SwingConstants.LEADING);
-		this.add(iconLabel);*/
-
+		JLabel iconLabel = new JLabel("", icon, SwingConstants.CENTER);
+		iconLabel.setPreferredSize(new Dimension(Window.WIDTH, icon.getIconHeight()));
+		this.add(iconLabel);
 	}
 
 	/**

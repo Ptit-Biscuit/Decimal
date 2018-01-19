@@ -104,9 +104,7 @@ public class Window extends JFrame {
 		this.setLocation((int) centreEcran.getX() - (WIDTH / 2),
 				(int) centreEcran.getY() - (HEIGHT / 2));
 
-		MyKeyAdapter adapter = new MyKeyAdapter();
-		this.addKeyListener(adapter);
-		this.addMouseListener(adapter);
+		this.addKeyListener(new MyKeyAdapter());
 
 		this.pack();
 		this.setVisible(true);
@@ -143,7 +141,7 @@ public class Window extends JFrame {
 
 		this.content.add(new EndPanel(score), "End");
 		this.showCard("End");
-		App.endGame(score);
+		//App.endGame(score);
 	}
 
 	/**

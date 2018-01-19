@@ -31,7 +31,7 @@ public class SubscribeButton extends JButton {
 			String password = String.valueOf(passwordField.getPassword());
 			String confirm = String.valueOf(confirmField.getPassword());
 
-			if (pseudo.isEmpty() || pseudo.trim().isEmpty()) {
+			if (pseudo.isEmpty() || pseudo.trim().isEmpty() || "test".equals(pseudo)) {
 				pseudoField.setBackground(new Color(255, 189, 189));
 				pseudoField.setToolTipText("Pseudo vide");
 				okPseudo = false;

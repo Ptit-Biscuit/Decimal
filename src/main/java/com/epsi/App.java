@@ -33,7 +33,11 @@ public class App  {
 	 * @param args Les arguments
 	 */
 	public static void main(String[] args) {
-		System.setProperty("isDev", System.getenv("isDev"));
+		if (System.getenv("isDev") != null) {
+			System.setProperty("isDev", System.getenv("isDev"));
+		} else {
+			System.setProperty("isDev", "false");
+		}
 
 		if (dao == null || dao.isClosed()) {
 			try {
