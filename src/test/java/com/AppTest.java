@@ -4,6 +4,7 @@ import com.epsi.App;
 import com.epsi.dao.Dao;
 import junit.framework.TestCase;
 import org.apache.logging.log4j.LogManager;
+import org.junit.Before;
 
 import java.sql.SQLException;
 
@@ -15,7 +16,7 @@ public class AppTest
 {
     private static Dao dao;
 
-    public void testValidatePlayer(){
+    public AppTest() {
         if (dao == null || dao.isClosed()) {
             try {
                 dao = new Dao();
@@ -23,17 +24,16 @@ public class AppTest
                 LogManager.getLogger(App.class).fatal("Impossible de se connecter à la BDD", e);
             }
         }
+    }
+
+    public void testValidatePlayer() {
+        assertEquals("Validation du joueur = ", true, dao.newPlayer("test", App.hashPassword("test")));
         assertEquals("Validation du joueur = ", false, dao.newPlayer("test", App.hashPassword("test")));
     }
 
-    public void testLoginPlayer(){
-        if (dao == null || dao.isClosed()) {
-            try {
-                dao = new Dao();
-            } catch (SQLException e) {
-                LogManager.getLogger(App.class).fatal("Impossible de se connecter à la BDD", e);
-            }
-        }
+    public void testRemovePlayer() {}
+
+    public void testLoginPlayer() {
         assertEquals("Validation du joueur = ", true, dao.newPlayer("test", App.hashPassword("test")));
         assertEquals("Validation du joueur = ", true, dao.newPlayer("test", App.hashPassword("nottest")));
     }

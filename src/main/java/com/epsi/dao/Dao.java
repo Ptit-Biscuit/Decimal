@@ -25,7 +25,7 @@ public class Dao {
 			LogManager.getLogger(Dao.class).fatal("Driver jdbc introuvable", e);
 		}
 
-		this.con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Decimal?user=root");
+		this.con = DriverManager.getConnection("jdbc:mysql://enzomallard.fr:3306/vincent?user=vincent&password=qcAIH46TjePA3Lgo");
 	}
 
 	/**
