@@ -121,12 +121,11 @@ public class Dao {
 
 		if (!this.isClosed()) {
 			try {
-				ok = this.con.prepareStatement(x).execute();
+				ok = (this.con.prepareStatement(x).executeUpdate() != 0);
 			} catch (SQLException e) {
 				LogManager.getLogger(Dao.class).error("Erreur avec la requête d'ajout de score", e);
 			}
 		}
-
 		return ok;
 	}
 
