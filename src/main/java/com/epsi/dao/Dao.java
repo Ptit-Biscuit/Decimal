@@ -11,7 +11,7 @@ public class Dao {
 	/**
 	 * La connexion avec la BDD.
 	 */
-	private Connection con;
+	private Connection con; // connection
 
 	/**
 	 * Constructeur de la classe Dao.
