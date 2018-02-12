@@ -90,7 +90,7 @@ public class Dao {
 	 */
 	public boolean deletePlayer(String pseudo, String password) {
 		boolean valid = false;
-		String x = "DELETE * FROM joueurs WHERE pseudo = '" + pseudo + "' AND password = '" + password + "';";
+		String x = "DELETE * FROM joueurs WHERE pseudo = '" + pseudo + "' AND password = '" + password + "' CASCADE;";
 
 		if (!this.isClosed()) {
 			try {
