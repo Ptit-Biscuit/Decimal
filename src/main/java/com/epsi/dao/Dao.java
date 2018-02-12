@@ -44,6 +44,7 @@ public class Dao {
 				add = this.con.prepareStatement(x).executeUpdate() == 1;
 			} catch (SQLException e) {
 				LogManager.getLogger(Dao.class).error("Joueur déjà existant", e);
+				return false;
 			}
 		}
 
@@ -75,6 +76,7 @@ public class Dao {
 				}
 			} catch (SQLException e) {
 				LogManager.getLogger(Dao.class).error("Erreur avec la requête de validation d'un joueur", e);
+				return false;
 			}
 		}
 
@@ -90,13 +92,14 @@ public class Dao {
 	 */
 	public boolean deletePlayer(String pseudo, String password) {
 		boolean valid = false;
-		String x = "DELETE * FROM joueurs WHERE pseudo = '" + pseudo + "' AND password = '" + password + "' CASCADE;";
+		String x = "DELETE FROM joueurs WHERE pseudo = '" + pseudo + "' AND password = '" + password + "';";
 
 		if (!this.isClosed()) {
 			try {
-				valid = this.con.prepareStatement(x).executeQuery().next();
+				valid = this.con.prepareStatement(x).executeUpdate() == 1;
 			} catch (SQLException e) {
-				LogManager.getLogger(Dao.class).error("Erreur avec la requête de validation d'un joueur", e);
+				LogManager.getLogger(Dao.class).error("Erreur avec la requête de suppression d'un joueur", e);
+				return false;
 			}
 		}
 
@@ -124,6 +127,7 @@ public class Dao {
 				ok = (this.con.prepareStatement(x).executeUpdate() != 0);
 			} catch (SQLException e) {
 				LogManager.getLogger(Dao.class).error("Erreur avec la requête d'ajout de score", e);
+				return false;
 			}
 		}
 		return ok;

@@ -17,6 +17,9 @@ public class DaoTest extends TestCase {
         if (dao == null || dao.isClosed()) {
             try {
                 dao = new Dao();
+                if (dao.validatePlayer("test", App.hashPassword("test"))) {
+                    dao.deletePlayer("test", App.hashPassword("test"));
+                }
             } catch (SQLException e) {
                 LogManager.getLogger(App.class).fatal("Impossible de se connecter à la BDD", e);
             }
@@ -47,5 +50,4 @@ public class DaoTest extends TestCase {
         dao.deletePlayer("test", App.hashPassword("test"));
         assertEquals("Validation du score = ", false, dao.addScore("test", 1234));
     }
-
 }

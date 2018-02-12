@@ -51,7 +51,6 @@
     </plugins>
       <resources>
           <resource>
-              <filtering>false</filtering>
               <directory>${project.basedir}/res</directory>
           </resource>
       </resources>
