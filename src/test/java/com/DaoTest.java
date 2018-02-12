@@ -31,11 +31,11 @@ public class DaoTest extends TestCase {
         assertEquals("Validation du joueur (déjà existant) = ", false, dao.newPlayer("test", App.hashPassword("test")));
     }
 
-/*    public void testRemovePlayer() {
+    public void testRemovePlayer() {
         dao.newPlayer("test", App.hashPassword("test"));
         assertEquals("Suppression du joueur = ", true, dao.deletePlayer("test", App.hashPassword("test")));
         assertEquals("Suppression du joueur (non existant) = ", false, dao.deletePlayer("test", App.hashPassword("test")));
-    }*/
+    }
 
     public void testLoginPlayer() {
         assertEquals("Validation du joueur (non existant) = ", false, dao.validatePlayer("test", App.hashPassword("test")));
