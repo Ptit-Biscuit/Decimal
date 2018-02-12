@@ -49,6 +49,12 @@
         </configuration>
       </plugin>
     </plugins>
+      <resources>
+          <resource>
+              <filtering>false</filtering>
+              <directory>${project.basedir}/res</directory>
+          </resource>
+      </resources>
   </build>
 
   <dependencies>
