@@ -20,7 +20,7 @@ public class Dao {
 	 */
 	public Dao() throws SQLException {
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
 		} catch (InstantiationException | ClassNotFoundException | IllegalAccessException e) {
 			LogManager.getLogger(Dao.class).fatal("Driver jdbc introuvable", e);
 		}
