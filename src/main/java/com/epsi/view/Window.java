@@ -153,7 +153,7 @@ public class Window extends JFrame {
 
 		this.content.add(new EndPanel(score), "End");
 		this.showCard("End");
-		//App.endGame(score);
+		App.endGame(score);
 	}
 
 	/**

@@ -1,4 +1,6 @@
 .idea/
+out/
 Decimal.iml
 target/
 DecimalLog.log
+/src/main/java/META-INF/
