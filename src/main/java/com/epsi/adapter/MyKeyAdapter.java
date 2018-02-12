@@ -64,7 +64,7 @@ public class MyKeyAdapter extends KeyAdapter implements MouseListener {
 			Window.getInstance().endGame();
 		} else {
 			initTimerTask();
-			timer.schedule(timerTask, 0, 1);
+			timer.scheduleAtFixedRate(timerTask, 0, 1);
 		}
 
 		isRunning = !isRunning;
