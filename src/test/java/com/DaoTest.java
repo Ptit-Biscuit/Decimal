@@ -32,6 +32,7 @@ public class DaoTest extends TestCase {
     }
 
     public void testRemovePlayer() {
+        dao.newPlayer("test", App.hashPassword("test"));
         assertEquals("Suppression du joueur = ", true, dao.deletePlayer("test", App.hashPassword("test")));
         assertEquals("Suppression du joueur (non existant) = ", false, dao.deletePlayer("test", App.hashPassword("test")));
     }
